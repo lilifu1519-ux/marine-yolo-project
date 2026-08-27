@@ -34,6 +34,50 @@
 
 垃圾类目标检测精度高（mAP > 0.97），海洋生物类召回率偏低，后续可通过增加海洋生物标注数据或调整训练策略优化。
 
+## Clone 后能拿到什么
+
+Clone 这个仓库后，你**立刻就能跑**，不需要自己训练模型：
+
+| 文件 | 说明 | 是否包含 |
+|------|------|---------|
+| `models/best.pt` | 训练好的模型（5.3 MB） | 包含，clone 后直接可用 |
+| `samples/` | 5 张样例测试图（155 KB） | 包含，2 张海洋生物 + 3 张垃圾 |
+| `src/*.py` | 三个可运行脚本 | 包含 |
+| `train/` `valid/` `test/` | 完整数据集（1072 张图） | 不包含，从 Roboflow 下载 |
+| `yolo11n.pt` | 官方预训练权重 | 不包含，首次运行自动下载 |
+| `best.onnx` | ONNX 导出格式 | 不包含，按下方步骤导出 |
+
+**别人 clone 后的三步使用流程**：
+
+```bash
+git clone https://github.com/lilifu1519-ux/marine-yolo-project.git
+cd marine-yolo-project
+conda create -n marine python=3.10 -y && conda activate marine
+conda install pytorch torchvision cpuonly -c pytorch
+pip install ultralytics gradio
+cd src && python app.py
+```
+
+浏览器打开 `http://127.0.0.1:7860`，上传 `samples/` 里的图片就能看到检测效果。
+
+## 目录结构
+
+```
+marine-yolo-project/
+├── data.yaml               # 数据集配置（类别名 + 路径）
+├── samples/                # 5 张样例图片（包含在仓库里）
+├── src/                     # 可运行脚本
+│   ├── test_detect.py       # 用官方模型验证环境是否正常
+│   ├── predict_local.py     # 用自训练模型检测本地图片
+│   └── app.py               # Gradio 网页 Demo
+├── models/                  # 模型文件
+│   └── best.pt              # 训练好的模型（包含在仓库里）
+├── .gitignore
+└── README.md
+```
+
+> **完整数据集**（train/valid/test 共 1072 张图）体积较大，不放入 Git。需要训练时从 [Roboflow](https://universe.roboflow.com/) 下载，或按下方训练说明自行准备。
+
 ## 环境安装
 
 使用 Anaconda 创建独立环境：
@@ -43,33 +87,6 @@ conda create -n marine python=3.10 -y
 conda activate marine
 conda install pytorch torchvision cpuonly -c pytorch
 pip install ultralytics gradio onnx onnxruntime
-```
-
-## 目录结构
-
-```
-marine-yolo-project/
-├── data.yaml               # 数据集配置（类别名 + 路径）
-├── yolo11n.pt               # YOLO11n 官方预训练权重
-├── train/                   # 训练集（804 张图 + 804 个标注）
-│   ├── images/
-│   └── labels/
-├── valid/                   # 验证集（160 张图 + 160 个标注）
-│   ├── images/
-│   └── labels/
-├── test/                    # 测试集（108 张图 + 108 个标注）
-│   ├── images/
-│   └── labels/
-├── src/                     # 可运行脚本
-│   ├── test_detect.py       # 用官方模型验证环境是否正常
-│   ├── predict_local.py     # 用自训练模型检测本地图片
-│   └── app.py               # Gradio 网页 Demo
-├── models/                  # 模型文件
-│   ├── best.pt              # 训练好的 PyTorch 模型
-│   └── best.onnx            # 导出的 ONNX 通用格式
-├── runs/                    # 本地训练输出（评估图表等）
-├── .gitignore
-└── README.md
 ```
 
 ## 快速开始
@@ -90,7 +107,7 @@ python test_detect.py
 python predict_local.py
 ```
 
-自动使用 `test/images/` 里的第一张图，结果保存为 `src/own_result.jpg`。
+自动使用 `samples/` 里的第一张图（有 `test/images/` 时优先用完整测试集），结果保存为 `src/own_result.jpg`。
 
 指定图片：
 

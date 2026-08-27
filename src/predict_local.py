@@ -12,20 +12,21 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 PROJECT_DIR = SCRIPT_DIR.parent
 
 MODEL_PATH = PROJECT_DIR / "models" / "best.pt"
-DEFAULT_IMG_DIR = PROJECT_DIR / "test" / "images"
+TEST_IMG_DIR = PROJECT_DIR / "test" / "images"
+SAMPLES_DIR = PROJECT_DIR / "samples"
 OUTPUT_NAME = SCRIPT_DIR / "own_result.jpg"
 
 
 def find_default_image():
-    if not DEFAULT_IMG_DIR.exists():
-        print(f"找不到测试图片目录：{DEFAULT_IMG_DIR}")
-        print("请用 --img 指定一张图片路径")
-        sys.exit(1)
-    for ext in (".jpg", ".jpeg", ".png"):
-        files = list(DEFAULT_IMG_DIR.glob(f"*{ext}"))
-        if files:
-            return str(files[0])
-    print(f"在 {DEFAULT_IMG_DIR} 里没找到图片。")
+    """优先用 test/images/，没有就用 samples/（clone 后的场景）"""
+    search_dirs = [TEST_IMG_DIR, SAMPLES_DIR]
+    for d in search_dirs:
+        if d.exists():
+            for ext in (".jpg", ".jpeg", ".png"):
+                files = list(d.glob(f"*{ext}"))
+                if files:
+                    return str(files[0])
+    print("找不到测试图片。请用 --img 指定一张图片路径，或把图片放到 samples/ 文件夹。")
     sys.exit(1)
 
 

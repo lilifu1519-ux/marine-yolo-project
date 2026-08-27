@@ -3,7 +3,10 @@
 *.pth
 *.onnx
 
-# 数据集（体积大，不放 Git）
+# 例外：保留训练好的模型（5.3 MB，别人 clone 后能直接用）
+!models/best.pt
+
+# 数据集（体积大，不放 Git，只保留 samples/ 样例图）
 train/
 valid/
 test/

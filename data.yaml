@@ -1,0 +1,7 @@
+path: D:/Trae/marine-yolo-project
+train: train/images
+val: valid/images
+test: test/images
+
+nc: 4
+names: ['Trash', 'Other', 'Garbage', 'Marine Life']

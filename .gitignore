@@ -1,0 +1,33 @@
+# 模型权重文件（体积大，不放 Git）
+*.pt
+*.pth
+*.onnx
+
+# 数据集（体积大，不放 Git）
+train/
+valid/
+test/
+
+# 训练产物
+runs/
+models/exp01/
+
+# 压缩包
+*.zip
+
+# Python 缓存
+__pycache__/
+*.pyc
+
+# 检测结果图片（示例性质，不入库）
+my_first_detection.jpg
+own_result.jpg
+bus.jpg
+
+# Roboflow 元数据
+README.dataset.txt
+README.roboflow.txt
+
+# 系统文件
+.DS_Store
+Thumbs.db

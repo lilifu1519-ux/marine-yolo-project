@@ -1,0 +1,10 @@
+# 依赖清单（配合 conda 环境使用）
+# 步骤：conda create -n marine python=3.10 -y && conda activate marine
+#       conda install pytorch torchvision cpuonly -c pytorch
+#       pip install -r requirements.txt
+# 版本取自实际跑通的环境：ultralytics 8.4.129 / gradio 6.26.0
+
+ultralytics==8.4.129
+gradio==6.26.0
+onnx==1.22.0
+onnxruntime==1.23.2

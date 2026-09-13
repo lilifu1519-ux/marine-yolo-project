@@ -34,6 +34,14 @@
 
 垃圾类目标检测精度高（mAP > 0.97），海洋生物类召回率偏低，后续可通过增加海洋生物标注数据或调整训练策略优化。
 
+**实际检测效果**：
+
+| 海洋生物检测 | 水下垃圾检测 |
+|:---:|:---:|
+| ![detect_marine_life](assets/detect_marine_life.jpg) | ![detect_garbage](assets/detect_garbage.jpg) |
+
+> 效果图由 `src/make_assets.py` 生成，可随时重新产出。
+
 ## Clone 后能拿到什么
 
 Clone 这个仓库后，你**立刻就能跑**，不需要自己训练模型：
@@ -54,7 +62,7 @@ git clone https://github.com/lilifu1519-ux/marine-yolo-project.git
 cd marine-yolo-project
 conda create -n marine python=3.10 -y && conda activate marine
 conda install pytorch torchvision cpuonly -c pytorch
-pip install ultralytics gradio
+pip install -r requirements.txt
 cd src && python app.py
 ```
 
@@ -72,6 +80,8 @@ marine-yolo-project/
 │   └── app.py               # Gradio 网页 Demo
 ├── models/                  # 模型文件
 │   └── best.pt              # 训练好的模型（包含在仓库里）
+├── assets/                  # 检测效果图（README 展示用）
+├── requirements.txt         # Python 依赖清单
 ├── .gitignore
 └── README.md
 ```
@@ -86,7 +96,7 @@ marine-yolo-project/
 conda create -n marine python=3.10 -y
 conda activate marine
 conda install pytorch torchvision cpuonly -c pytorch
-pip install ultralytics gradio onnx onnxruntime
+pip install -r requirements.txt
 ```
 
 ## 快速开始
